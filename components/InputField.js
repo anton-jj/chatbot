@@ -1,15 +1,22 @@
+import { Cat } from "lucide-react-native";
 import { useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import { Button, Dimensions, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { ChatHistoryProvider, useChatHistory } from "../hooks/useChatHistory";
+
+    const {width} = Dimensions.get("window")
 
 export function InputField() {
     const [chatContent, setChatContent] = useState('');
+    const { userMessageUpdate } = useChatHistory();
 
     return (
         <View style={style.InputContainer}>
-            <TextInput style={style.inputfield} value={chatContent} onChangeText={setChatContent} placeholder="Type to chat.."></TextInput>
+            <TextInput multiline style={style.inputfield} value={chatContent} onChangeText={setChatContent} placeholder="Type to chat.."></TextInput>
 
             {/* änra till att skicka till API sen*/}
-            <Button style={style.sendButton} title="icon?" onPress={() => console.log(chatContent + "skicka till API sen")}></Button>
+            <TouchableOpacity style={style.sendButton} onPress={() => userMessageUpdate(chatContent)}>
+                <Cat size={25} color={"pink"}/>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -19,14 +26,30 @@ export function InputField() {
 const style = StyleSheet.create({
     InputContainer: {
         flexDirection: "row",
-        backgroundColor: "orange",
-        justifyContent: "center",
+        backgroundColor: "#C68A9E",
+        justifyContent: "space-between",
         alignItems: "center",
-        padding: 16,
-        elevation: 3,
+        position: "absolute",
+        elevation: 5,
+        width: width,
+        maxHeight: 120,
+        minHeight: "fit-content",
+        bottom: 0,
+        borderRadius: 24,
+    },
+
+    inputfield: {
+        width: width - 60,
+        fontSize: 20,
+        paddingLeft: 20,
     },
 
     sendButton: {
-        backgroundColor: "green",
+        backgroundColor: "#553671",
+        justifyContent: "center",
+        alignItems: "center",
+        width: 45,
+        height: 45,
+        borderRadius: 24,
     }
 })

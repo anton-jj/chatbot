@@ -1,7 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { createChatBot } from "./Api.tsx";
+import { StyleSheet, Text, View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import { createChatBot } from "./Api";
 import { InputField } from './components/InputField';
+import ChatBubble from "./components/ChatBubble";
+import ChatHistory from "./components/ChatHistory";
+import { SafeAreaView  } from "react-native-safe-area-context";
+import { ChatHistoryProvider, useChatHistory } from "./hooks/useChatHistory";
+
 
 async function testBot(): Promise<void> {
   const bot1 = createChatBot(
@@ -24,11 +29,19 @@ async function testBot(): Promise<void> {
 export default function App() {
   testBot();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <InputField/>
-      <StatusBar style="auto" />
-    </View>
+    <ChatHistoryProvider>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+            <SafeAreaView>
+              <ScrollView style={styles.scrollView}>
+                <ChatHistory></ChatHistory>
+              </ScrollView>
+              <View style={styles.container}>
+                <InputField/>
+                <StatusBar style="auto" />
+              </View>
+            </SafeAreaView>
+        </KeyboardAvoidingView>
+      </ChatHistoryProvider>
   );
 }
 
@@ -38,5 +51,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: -1,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25
+  },
+  keyboardAvoid: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  scrollView: {
+    backgroundColor: "#fff",
+    width: "100%",
+    height: "100%",
+    marginBottom: 60,
+    marginTop: 10,
   },
 });
