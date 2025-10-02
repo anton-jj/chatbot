@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { createChatBot } from "./Api.tsx";
+import { InputField } from './components/InputField';
 
 async function testBot(): Promise<void> {
   const bot1 = createChatBot(
@@ -25,6 +26,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
+      <InputField/>
       <StatusBar style="auto" />
     </View>
   );
