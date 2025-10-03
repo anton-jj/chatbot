@@ -14,32 +14,32 @@ function getApiKey(): string {
   return API_KEY;
 }
 
-export interface botConfig {
+export interface BotConfig {
   id: string;
   name: string;
   system_instruction: string;
 }
 
-export interface message {
+export interface Message {
   role: "user" | "model" | "system";
   content: string;
 }
 
-export interface bot {
+export interface Bot {
   id: string;
   name: string;
   sendMessage: (message: string) => Promise<string | undefined>;
-  getHistory: () => message[];
+  getHistory: () => Message[];
 }
 
-export function createChatBot(config: botConfig): bot {
+export function createChatBot(config: BotConfig): Bot {
   const chat = ai.chats.create({
     model: "gemini-2.5-flash",
     config: {
       systemInstruction: config.system_instruction,
     },
   });
-  const history: message[] = [
+  const history: Message[] = [
     { role: "system", content: config.system_instruction },
   ];
 
