@@ -34,7 +34,7 @@ export function ChatScreen() {
 
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
+      style={styles.keyboardAvoid}
     >
       <SafeAreaView>
         <ScrollView style={styles.scrollView}>

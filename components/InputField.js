@@ -34,12 +34,13 @@ const style = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     position: "absolute",
-    elevation: 5,
+    elevation: 15,
     width: width,
     maxHeight: 120,
     minHeight: "fit-content",
     bottom: 0,
     borderRadius: 24,
+    padding: 5
   },
 
   inputfield: {
