@@ -32,7 +32,6 @@ export default function ChatScreen() {
 
   return (
 
-    <ChatHistoryProvider>
 
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -49,7 +48,6 @@ export default function ChatScreen() {
       </SafeAreaView>
     </KeyboardAvoidingView>
 
-    </ChatHistoryProvider>
   )
 }
 const styles = StyleSheet.create({

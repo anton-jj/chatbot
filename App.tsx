@@ -15,6 +15,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
 	return (
 	
+    <ChatHistoryProvider>
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen name="Start" component={Startpage} />
@@ -22,6 +23,7 @@ export default function App() {
 			</Stack.Navigator>
 		</NavigationContainer>
 
+    </ChatHistoryProvider>
 	);
 }
 
