@@ -1,19 +1,32 @@
 
 import { View, Text, Pressable, StyleSheet} from "react-native";
 import { Link } from 'expo-router';
+import { RootStackParamList } from "../App";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+
+
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList,"Start">;
+
 
 
 export default function Startpage(){
-    return(
+
+  const navigation = useNavigation<NavigationProp>();
+
+  return(
         <View style={styles.container}>
             
             <Text style={styles.title}>Startzidan</Text>
            
-            <Link href="/ChatScreen" asChild>
-            <Pressable style={styles.button}>
+          
+            <Pressable style={styles.button} 
+            onPress={() => navigation.navigate("ChatScreen")}>
+
                 <Text style={styles.buttonText}>Chatta med Chad</Text>
             </Pressable>
-            </Link>
+          
         
     
         </View>
