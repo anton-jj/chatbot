@@ -7,15 +7,15 @@ import {
   Text,
   View,
 } from "react-native";
-import { createChatBot } from "./Api";
-import { InputField } from "./components/InputField";
-import { ChatHistory } from "./components/ChatHistory";
+import { createChatBot } from "../Api";
+import { InputField } from "../components/InputField";
+import { ChatHistory } from "../components/ChatHistory";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
-import { useChatHistory } from "./hooks/useChatHistory";
+import { ChatHistoryProvider, useChatHistory } from "../hooks/useChatHistory";
 
 
-export function ChatScreen() {
+export default function ChatScreen() {
   const { setBot } = useChatHistory();
 
   useEffect(() => {
@@ -32,6 +32,7 @@ export function ChatScreen() {
 
   return (
 
+
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
@@ -46,6 +47,7 @@ export function ChatScreen() {
         </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
+
   )
 }
 const styles = StyleSheet.create({
