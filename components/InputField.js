@@ -37,24 +37,24 @@ export function InputField() {
 	)
 }
 
-{/** Lite fulstyling till att börja med, fixa 100% bredd etc, fick det inte att funka */ }
 
 const style = StyleSheet.create({
 	InputContainer: {
 		flexDirection: "row",
 		backgroundColor: "#C68A9E",
-		justifyContent: "space-between",
 		alignItems: "center",
 		position: "absolute",
 		elevation: 5,
-		width: width,
+		width: width -10,
 		maxHeight: 120,
 		minHeight: "fit-content",
-		bottom: 0,
+		bottom: 5,
 		borderRadius: 24,
+		
 	},
 
 	inputfield: {
+		flex: 1,
 		width: width - 60,
 		fontSize: 20,
 		paddingLeft: 20,
@@ -67,5 +67,7 @@ const style = StyleSheet.create({
 		width: 45,
 		height: 45,
 		borderRadius: 24,
+		margin: 5,
+		marginRight: 5,
 	}
 })
