@@ -55,7 +55,7 @@ const style = StyleSheet.create({
 	},
 
 	inputfield: {
-		width: width - 60,
+		width: width -60,
 		fontSize: 20,
 		paddingLeft: 20,
 	},
