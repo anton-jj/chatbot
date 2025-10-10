@@ -13,21 +13,20 @@ import { ChatHistory } from "../components/ChatHistory";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
 import { ChatHistoryProvider, useChatHistory } from "../hooks/useChatHistory";
+import { Bot } from "../Api";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../App";
 
+type ChatScreenRouteProp = RouteProp<RootStackParamList, "ChatScreen">
 
-export default function ChatScreen() {
+type Props = { route: ChatScreenRouteProp}
+
+export function ChatScreen({route} : Props) {
+	const { bot } = route.params
 	const { setBot } = useChatHistory();
 
 	useEffect(() => {
-		const bot1 = createChatBot(
-			{
-				id: "123",
-				name: "chad",
-				system_instruction: "you are a classic gigachad",
-			},
-		);
-		setBot(bot1);
-		console.log("bot init: ", bot1.name)
+		setBot(bot);
 	}, []);
 
 	return (
