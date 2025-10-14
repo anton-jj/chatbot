@@ -27,7 +27,7 @@ export function ChatHistoryProvider({ children }: { children: React.ReactNode | 
 
 	useEffect(() => {
 		if (currentBot) {
-			const botHistory = currentBot.getHistory().map(h => ({
+			const botHistory = currentBot.getHistory().filter(h => h.role !== "system").map(h => ({
 				sender: h.role === 'user' ? 'user' : 'ai',
 				message: h.content,
 			}));

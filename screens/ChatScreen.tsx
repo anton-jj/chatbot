@@ -34,6 +34,7 @@ export function ChatScreen({route} : Props) {
 
 	useEffect(() => {
 		setBot(bot);
+		console.log(bot.name)
 	}, []);
 
   return (
