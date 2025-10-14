@@ -1,8 +1,10 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+
+import { View, Text, Pressable, StyleSheet, useColorScheme, Appearance, Switch,} from "react-native";
 import { Link } from 'expo-router';
 import { RootStackParamList } from "../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from 'expo-status-bar';
 import { Bot, createChatBot } from "../Api";
 
 type navigationProp = NativeStackNavigationProp<RootStackParamList, "Start">;
@@ -24,12 +26,20 @@ const bots = {
 		),
 };
 
-export default function Startpage() {
-
-	const navigation = useNavigation<navigationProp>();
+export default function Startpage(){
+  const navigation = useNavigation<navigationProp>();
+  const colorScheme = useColorScheme();
+  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
+  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
 	return (
-		<View style={styles.container}>
+    <View style={[styles.container, themeContainerStyle]}>
+      <View style={styles.switchHolder}>          
+        <Switch value={colorScheme==='dark'} style={styles.switchButton} 
+              onChange={() => {
+          Appearance.setColorScheme(colorScheme==='dark' ? 'light' : 'dark')
+        }}/>
+      </View>
 			<Text style={styles.title}>Startzidan</Text>
 			<Pressable style={styles.button}
 				onPress={() => navigation.navigate("ChatScreen", { bot : bots.chad})}>
@@ -39,33 +49,53 @@ export default function Startpage() {
 				onPress={() => navigation.navigate("ChatScreen", { bot : bots.linus})}>
 				<Text style={styles.buttonText}>Chatta med Linus</Text>
 			</Pressable>
+      <StatusBar/>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		padding: 20,
-		backgroundColor: '#fff',
-	},
-	title: {
-		fontSize: 24,
-		marginBottom: 30,
-		textAlign: 'center',
-		fontWeight: 'bold',
-	},
-	button: {
-		padding: 15,
-		backgroundColor: '#007AFF',
-		borderRadius: 8,
-		marginBottom: 15,
-	},
-	buttonText: {
-		color: 'white',
-		textAlign: 'center',
-		fontSize: 16,
-		fontWeight: '600',
-	},
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  lightContainer: {
+    backgroundColor: '#fff',
+  },
+  darkContainer: {
+    backgroundColor: '#222',
+  },
+    lightThemeText: {
+    color: '#222',
+  },
+  darkThemeText: {
+    color: '#fff',
+  },
+  title: {
+    flex: 1,
+    fontSize: 24,
+    marginBottom: 30,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  button: {
+    justifyContent: "center",
+    padding: 15,
+    backgroundColor: '#007AFF',
+    borderRadius: 8,
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  switchHolder: {
+    flex: 1,
+  },
+  switchButton: {
+
+  },
 });
