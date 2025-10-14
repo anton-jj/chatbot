@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
+	KeyboardAvoidingView,
+	Platform,
+	ScrollView,
+	StyleSheet,
+	Text,
+	View,
   useColorScheme,
   Appearance,
   Switch,
@@ -17,32 +17,31 @@ import { ChatHistory } from "../components/ChatHistory";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
 import { ChatHistoryProvider, useChatHistory } from "../hooks/useChatHistory";
+import { Bot } from "../Api";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../App";
 
+type ChatScreenRouteProp = RouteProp<RootStackParamList, "ChatScreen">
 
+type Props = { route: ChatScreenRouteProp}
 
-export default function ChatScreen() {
-  const { setBot } = useChatHistory();
+export function ChatScreen({route} : Props) {
+	const { bot } = route.params
+	const { setBot } = useChatHistory();
   const colorScheme = useColorScheme();
   const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
 
-  useEffect(() => {
-    const bot1 = createChatBot(
-      {
-        id: "123",
-        name: "chad",
-        system_instruction: "you are a classic gigachad",
-      },
-    );
-    setBot(bot1);
-    console.log("bot init: ", bot1.name)
-  }, []);
+	useEffect(() => {
+		setBot(bot);
+	}, []);
 
   return (
 
     
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
       style={[styles.container, themeContainerStyle]}>
       <SafeAreaView>
         <ThemeProvider value={colorScheme=== 'dark' ? DarkTheme : DefaultTheme}>
@@ -57,7 +56,7 @@ export default function ChatScreen() {
       </SafeAreaView>
     </KeyboardAvoidingView>
 
-  )
+	)
 }
 const styles = StyleSheet.create({
   container: {

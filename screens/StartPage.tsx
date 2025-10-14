@@ -5,41 +5,53 @@ import { RootStackParamList } from "../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
+import { Bot, createChatBot } from "../Api";
 
+type navigationProp = NativeStackNavigationProp<RootStackParamList, "Start">;
 
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList,"Start">;
-
-
+const bots = {
+		 chad : createChatBot(
+			{
+				id: "123",
+				name: "chad",
+				system_instruction: "you are a classic gigachad",
+			},
+		),
+		linus :  createChatBot(
+			{
+				id: "321",
+				name: "linus",
+				system_instruction: "you are linus the creator of the linux kernel",
+			},
+		),
+};
 
 export default function Startpage(){
+  const navigation = useNavigation<navigationProp>();
   const colorScheme = useColorScheme();
   const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
   const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
-  const navigation = useNavigation<NavigationProp>();
 
-  return(
-        <View style={[styles.container, themeContainerStyle]}>
-          <View style={styles.switchHolder}>          
-            <Switch value={colorScheme==='dark'} style={styles.switchButton} 
-                  onChange={() => {
-              Appearance.setColorScheme(colorScheme==='dark' ? 'light' : 'dark')
-            }}/>
-          </View>
-
-            <Text style={[styles.title, themeTextStyle]}>Startzidan</Text>
-           
-          
-            <Pressable style={styles.button} 
-            onPress={() => navigation.navigate("ChatScreen")}>
-
-                <Text style={styles.buttonText}>Chatta med Chad</Text>
-            </Pressable>
-            <StatusBar/>
-        
-    
-        </View>
-    );
+	return (
+    <View style={[styles.container, themeContainerStyle]}>
+      <View style={styles.switchHolder}>          
+        <Switch value={colorScheme==='dark'} style={styles.switchButton} 
+              onChange={() => {
+          Appearance.setColorScheme(colorScheme==='dark' ? 'light' : 'dark')
+        }}/>
+      </View>
+			<Text style={styles.title}>Startzidan</Text>
+			<Pressable style={styles.button}
+				onPress={() => navigation.navigate("ChatScreen", { bot : bots.chad})}>
+				<Text style={styles.buttonText}>Chatta med Chad</Text>
+			</Pressable>
+			<Pressable style={styles.button}
+				onPress={() => navigation.navigate("ChatScreen", { bot : bots.linus})}>
+				<Text style={styles.buttonText}>Chatta med Linus</Text>
+			</Pressable>
+      <StatusBar/>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
