@@ -46,7 +46,7 @@ export function ChatScreen({route} : Props) {
       <SafeAreaView>
         <ThemeProvider value={colorScheme=== 'dark' ? DarkTheme : DefaultTheme}>
           <ScrollView style={[styles.scrollView, themeContainerStyle]}>
-            <ChatHistory></ChatHistory>
+            <ChatHistory />
           </ScrollView>
           <View style={[styles.container, themeContainerStyle]}>
             <InputField />
