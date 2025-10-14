@@ -1,18 +1,22 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, useColorScheme, Appearance, Switch, } from "react-native";
 import { UIMessage } from "../hooks/useChatHistory";
+
 
 type ChatBubbleProps = {
   message: UIMessage;
 }
 
 export default function ChatBubble({ message }: ChatBubbleProps) {
+    const colorScheme = useColorScheme();
+    const themeContainerStyle = colorScheme === 'light' ? styles.lightThemeOverlap : styles.darkThemeOverlap;
+
   if (message.sender === "user") {
     return (
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <Text style={styles.text}>{message.message}</Text>
           <View style={styles.rightArrow} />
-          <View style={styles.rightArrowOverlap} />
+          <View style={[styles.rightArrowOverlap, themeContainerStyle]} />
         </View>
       </View>
     )
@@ -22,7 +26,7 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
       <View style={styles.wrapperAi}>
         <View style={styles.containerAi}>
           <View style={styles.rightArrowAi} />
-          <View style={styles.rightArrowOverlapAi} />
+          <View style={[styles.rightArrowOverlapAi, themeContainerStyle]} />
           <Text style={styles.textAi}>{message.message}</Text>
         </View>
       </View>
@@ -34,7 +38,6 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -63,18 +66,20 @@ const styles = StyleSheet.create({
   },
   rightArrowOverlap: {
     position: "absolute",
-    backgroundColor: "#fff",
     width: 20,
     height: 35,
     bottom: -6,
     borderBottomLeftRadius: 18,
     right: -20
   },
-
-
+  darkThemeOverlap: {
+    backgroundColor: "#222"
+  },
+  lightThemeOverlap: {
+    backgroundColor: "#fff"
+  },
   wrapperAi: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -103,7 +108,6 @@ const styles = StyleSheet.create({
   },
   rightArrowOverlapAi: {
     position: "absolute",
-    backgroundColor: "#fff",
     width: 20,
     height: 35,
     bottom: -6,
