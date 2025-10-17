@@ -20,7 +20,8 @@ export default function App() {
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen name="Start" component={Startpage} options={{title: 'AI Chatbot'}} />
-				<Stack.Screen name="ChatScreen" component={ChatScreen} options={{title: 'Chad'}}/>
+				<Stack.Screen name="ChatScreen" component={ChatScreen} 
+				options={({route}) => ({title: route.params.bot.name})}/>
 			</Stack.Navigator>
 		</NavigationContainer>
 
