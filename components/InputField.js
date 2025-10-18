@@ -15,7 +15,7 @@ export function InputField() {
 			return
 		}
 		const chat = chatContent
-		setChatContent(chatPlaceHolder)
+		setChatContent("")
 		try {
 			await sendMessage(chat)
 		} catch (e) {
