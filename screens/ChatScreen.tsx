@@ -27,35 +27,27 @@ type Props = { route: ChatScreenRouteProp };
 export function ChatScreen({ route }: Props) {
   const { bot } = route.params;
   const { setBot } = useChatHistory();
-  const { theme, toggleTheme } = useTheme();
-
-  const themeTextStyle =
-    theme === "light" ? styles.lightThemeText : styles.darkThemeText;
-  const themeContainerStyle =
-    theme === "light" ? styles.lightContainer : styles.darkContainer;
+  const { palette, toggleTheme } = useTheme();
 
   useThemeHeader();
+
   useEffect(() => {
     setBot(bot);
   }, []);
-  // useEffect(() => {
-  //    navigation.setOptions({
-  //      headerStyle: { backgroundColor: theme === "light" ? "#fff" : "#222" },
-  //      headerTintColor: theme === "light" ? "#222" : "#fff",
-  //    });
-  //  });;
+  const backgroundStyle = { backgroundColor: palette.background };
+  const textStyle = { color: palette.textOnSurface };
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
-      style={[styles.container, themeContainerStyle]}
+      style={[styles.container, backgroundStyle]}
     >
       <SafeAreaView>
-        <ScrollView style={[styles.scrollView, themeContainerStyle]}>
+        <ScrollView style={[styles.scrollView, backgroundStyle]}>
           <ChatHistory />
         </ScrollView>
-        <View style={[styles.container, themeContainerStyle]}>
+        <View style={[styles.container, backgroundStyle]}>
           <InputField />
           <StatusBar style="auto" />
         </View>
@@ -70,18 +62,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: -1,
     backgroundColor: "red",
-  },
-  lightContainer: {
-    backgroundColor: "#fff",
-  },
-  darkContainer: {
-    backgroundColor: "#222",
-  },
-  lightThemeText: {
-    color: "#222",
-  },
-  darkThemeText: {
-    color: "#fff",
   },
   keyboardAvoid: {
     flex: 1,

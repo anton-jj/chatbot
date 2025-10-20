@@ -25,20 +25,18 @@ const bots = {
 
 export default function Startpage() {
   const navigation = useNavigation<navigationProp>();
-  const { theme, toggleTheme } = useTheme();
+  const { palette, toggleTheme } = useTheme();
 
-  const themeTextStyle =
-    theme === "light" ? styles.lightThemeText : styles.darkThemeText;
-  const themeContainerStyle =
-    theme === "light" ? styles.lightContainer : styles.darkContainer;
+  const backgroundStyle = { backgroundColor: palette.background };
+  const textStyle = { color: palette.textPrimary };
 
   useThemeHeader();
   return (
-    <View style={[styles.container, themeContainerStyle]}>
+    <View style={[styles.container, backgroundStyle]}>
       <View style={styles.switchHolder}>
-        <Switch value={theme === "dark"} onValueChange={toggleTheme} />
+        <Switch value={palette === "dark"} onValueChange={toggleTheme} />
       </View>
-      <Text style={styles.title}>Startzidan</Text>
+      <Text style={[styles.title, textStyle]}>Startzidan</Text>
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("ChatScreen", { bot: bots.chad })}
