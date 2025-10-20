@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Startpage from "./screens/StartPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Bot } from "./Api";
-import { ThemeProvider } from "./hooks/themeContext";
+import { ThemeProvider, useTheme } from "./hooks/themeContext";
 
 export type RootStackParamList = {
   Start: undefined;

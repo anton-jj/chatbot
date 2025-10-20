@@ -1,38 +1,54 @@
-import { View, Text, StyleSheet, useColorScheme, Appearance, Switch, } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  useColorScheme,
+  Appearance,
+  Switch,
+} from "react-native";
 import { UIMessage } from "../hooks/useChatHistory";
-
+import { useTheme } from "../hooks/themeContext";
 
 type ChatBubbleProps = {
   message: UIMessage;
-}
+};
 
 export default function ChatBubble({ message }: ChatBubbleProps) {
-    const colorScheme = useColorScheme();
-    const themeContainerStyle = colorScheme === 'light' ? styles.lightThemeOverlap : styles.darkThemeOverlap;
+  const colorScheme = useColorScheme();
+  const { theme, toggleTheme } = useTheme();
+
+  const overlapBackgroundStyle =
+    theme === "light"
+      ? styles.lightScreenBackground
+      : styles.darkScreenBackground;
+  const themeTextStyle =
+    theme === "light" ? styles.lightThemeText : styles.darkThemeText;
+  const userBubbleStyle =
+    theme === "light" ? styles.lightUserBubble : styles.darkUserBubble;
+  const aiBubbleStyle =
+    theme === "light" ? styles.lightAiBubble : styles.darkAiBubble;
 
   if (message.sender === "user") {
     return (
       <View style={styles.wrapper}>
-        <View style={styles.container}>
-          <Text style={styles.text}>{message.message}</Text>
-          <View style={styles.rightArrow} />
-          <View style={[styles.rightArrowOverlap, themeContainerStyle]} />
+        <View style={[styles.container, userBubbleStyle]}>
+          <Text style={[styles.text, themeTextStyle]}>{message.message}</Text>
+          <View style={[styles.rightArrow, userBubbleStyle]} />
+          <View style={[styles.rightArrowOverlap, overlapBackgroundStyle]} />
         </View>
       </View>
-    )
-
+    );
   } else if (message.sender === "ai") {
     return (
       <View style={styles.wrapperAi}>
-        <View style={styles.containerAi}>
-          <View style={styles.rightArrowAi} />
-          <View style={[styles.rightArrowOverlapAi, themeContainerStyle]} />
-          <Text style={styles.textAi}>{message.message}</Text>
+        <View style={[styles.containerAi, aiBubbleStyle]}>
+          <View style={[styles.rightArrowAi, aiBubbleStyle]} />
+          <View style={[styles.rightArrowOverlapAi, overlapBackgroundStyle]} />
+          <Text style={[styles.textAi, themeTextStyle]}>{message.message}</Text>
         </View>
       </View>
-    )
+    );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -49,11 +65,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 5,
     maxWidth: "50%",
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
   },
   text: {
     fontSize: 16,
-    color: "#fff"
+    color: "#fff",
   },
   rightArrow: {
     position: "absolute",
@@ -62,7 +78,7 @@ const styles = StyleSheet.create({
     height: 25,
     bottom: 0,
     borderBottomLeftRadius: 25,
-    right: -10
+    right: -10,
   },
   rightArrowOverlap: {
     position: "absolute",
@@ -70,13 +86,13 @@ const styles = StyleSheet.create({
     height: 35,
     bottom: -6,
     borderBottomLeftRadius: 18,
-    right: -20
+    right: -20,
   },
   darkThemeOverlap: {
-    backgroundColor: "#222"
+    backgroundColor: "#222",
   },
   lightThemeOverlap: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   wrapperAi: {
     flex: 1,
@@ -91,11 +107,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 5,
     maxWidth: "50%",
-    alignSelf: "flex-start"
+    alignSelf: "flex-start",
   },
   textAi: {
     fontSize: 16,
-    color: "#fff"
+    color: "#fff",
   },
   rightArrowAi: {
     position: "absolute",
@@ -104,7 +120,7 @@ const styles = StyleSheet.create({
     height: 25,
     bottom: 0,
     borderBottomRightRadius: 25,
-    left: -10
+    left: -10,
   },
   rightArrowOverlapAi: {
     position: "absolute",
@@ -112,6 +128,24 @@ const styles = StyleSheet.create({
     height: 35,
     bottom: -6,
     borderBottomRightRadius: 18,
-    left: -20
-  }
-})
+    left: -20,
+  },
+  lightUserBubble: {
+    backgroundColor: "#C68A9E",
+  },
+  darkUserBubble: {
+    backgroundColor: "#4B2C3D",
+  },
+  lightAiBubble: {
+    backgroundColor: "#553671",
+  },
+  darkAiBubble: {
+    backgroundColor: "#311B3B",
+  },
+  lightScreenBackground: {
+    backgroundColor: "#fff",
+  },
+  darkScreenBackground: {
+    backgroundColor: "#222",
+  },
+});

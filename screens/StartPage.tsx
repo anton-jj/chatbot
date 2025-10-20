@@ -1,19 +1,12 @@
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  Appearance,
-  Switch,
-} from "react-native";
-import { Link } from "expo-router";
+import { View, Text, Pressable, StyleSheet, Switch } from "react-native";
 import { RootStackParamList } from "../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { Bot, createChatBot } from "../Api";
-import React from "react";
+import React, { useEffect } from "react";
 import { useTheme } from "../hooks/themeContext";
+import { useThemeHeader } from "../hooks/useThemeHeader";
 
 type navigationProp = NativeStackNavigationProp<RootStackParamList, "Start">;
 
@@ -39,6 +32,7 @@ export default function Startpage() {
   const themeContainerStyle =
     theme === "light" ? styles.lightContainer : styles.darkContainer;
 
+  useThemeHeader();
   return (
     <View style={[styles.container, themeContainerStyle]}>
       <View style={styles.switchHolder}>

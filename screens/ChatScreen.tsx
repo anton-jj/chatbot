@@ -17,6 +17,8 @@ import { ChatHistoryProvider, useChatHistory } from "../hooks/useChatHistory";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../App";
 import { useTheme } from "../hooks/themeContext";
+import { navigation } from "@ex";
+import { useThemeHeader } from "../hooks/useThemeHeader";
 
 type ChatScreenRouteProp = RouteProp<RootStackParamList, "ChatScreen">;
 
@@ -32,9 +34,16 @@ export function ChatScreen({ route }: Props) {
   const themeContainerStyle =
     theme === "light" ? styles.lightContainer : styles.darkContainer;
 
+  useThemeHeader();
   useEffect(() => {
     setBot(bot);
   }, []);
+  // useEffect(() => {
+  //    navigation.setOptions({
+  //      headerStyle: { backgroundColor: theme === "light" ? "#fff" : "#222" },
+  //      headerTintColor: theme === "light" ? "#222" : "#fff",
+  //    });
+  //  });;
 
   return (
     <KeyboardAvoidingView
@@ -60,6 +69,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: -1,
+    backgroundColor: "red",
   },
   lightContainer: {
     backgroundColor: "#fff",
