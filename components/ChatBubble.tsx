@@ -21,7 +21,7 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
       message.sender === "user" ? palette.surface : palette.surfaceAlt,
   };
 
-  const textStyle = { color: palette.textPrimary };
+  const textStyle = { color: palette.textOnSurface };
   const overlapStyle = { backgroundColor: palette.background };
   if (message.sender === "user") {
     return (

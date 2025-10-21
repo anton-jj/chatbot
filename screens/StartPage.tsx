@@ -4,66 +4,79 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { Bot, createChatBot } from "../Api";
-import React, { useEffect } from "react";
 import { useTheme } from "../hooks/themeContext";
 import { useThemeHeader } from "../hooks/useThemeHeader";
 
 type navigationProp = NativeStackNavigationProp<RootStackParamList, "Start">;
 
 const bots = {
-	professor: createChatBot({
-  id: "888",
-  name: "Professor",
-  system_instruction: "You are a wise university professor who explains things clearly and supports students with gentle encouragement.",
-}),
-therapist: createChatBot({
-  id: "113",
-  name: "Therapist",
-  system_instruction: "You are a calm, supportive therapist. You listen, reflect, and ask thoughtful questions without judgment.",
-}),
-companion: createChatBot({
-  id: "115",
-  name: "Companion",
-  system_instruction: `
-    You are a supportive, friendly companion. 
+  professor: createChatBot({
+    id: "888",
+    name: "Professor",
+    system_instruction:
+      "You are a wise university professor who explains things clearly and supports students with gentle encouragement.",
+  }),
+  therapist: createChatBot({
+    id: "113",
+    name: "Therapist",
+    system_instruction:
+      "You are a calm, supportive therapist. You listen, reflect, and ask thoughtful questions without judgment.",
+  }),
+  companion: createChatBot({
+    id: "115",
+    name: "Companion",
+    system_instruction: `
+    You are a supportive, friendly companion.
     You talk casually, listen well, and respond with empathy and interest.
   `,
-}),
+  }),
 };
 
 export default function Startpage() {
   const navigation = useNavigation<navigationProp>();
-  const { palette, toggleTheme } = useTheme();
+  const { mode, palette, toggleTheme } = useTheme();
 
+  const isLight: boolean = mode === "light";
   const backgroundStyle = { backgroundColor: palette.background };
   const textStyle = { color: palette.textPrimary };
+  const surfaceStyle = { backgroundColor: palette.surface };
 
   useThemeHeader();
   return (
     <View style={[styles.container, backgroundStyle]}>
       <View style={styles.switchHolder}>
-        <Switch value={palette === "dark"} onValueChange={toggleTheme} />
+        <Switch
+          trackColor={{ false: palette.surface, true: palette.surface }}
+          value={isLight}
+          onValueChange={toggleTheme}
+        />
       </View>
-      <Text style={[styles.title, textStyle]}>Startzidan</Text>
+      <Text style={[styles.title, textStyle]}>Chatbots</Text>
       <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("ChatScreen", { bot: bots.therapist})}
+        style={[styles.button, surfaceStyle]}
+        onPress={() =>
+          navigation.navigate("ChatScreen", { bot: bots.therapist })
+        }
       >
         <Text style={styles.buttonText}>Therapist</Text>
       </Pressable>
       <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("ChatScreen", { bot: bots.companion })}
+        style={[styles.button, surfaceStyle]}
+        onPress={() =>
+          navigation.navigate("ChatScreen", { bot: bots.companion })
+        }
       >
         <Text style={styles.buttonText}>Companion</Text>
       </Pressable>
       <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("ChatScreen", { bot: bots.professor })}
+        style={[styles.button, surfaceStyle]}
+        onPress={() =>
+          navigation.navigate("ChatScreen", { bot: bots.professor })
+        }
       >
         <Text style={styles.buttonText}>Professor</Text>
       </Pressable>
-      
+
       <StatusBar />
     </View>
   );
@@ -74,18 +87,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 20,
-  },
-  lightContainer: {
-    backgroundColor: "#fff",
-  },
-  darkContainer: {
-    backgroundColor: "#222",
-  },
-  lightThemeText: {
-    color: "#222",
-  },
-  darkThemeText: {
-    color: "#fff",
   },
   title: {
     flex: 1,
