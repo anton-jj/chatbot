@@ -1,63 +1,59 @@
 import { StatusBar } from "expo-status-bar";
 import {
-	KeyboardAvoidingView,
-	Platform,
-	ScrollView,
-	StyleSheet,
-	Text,
-	View,
-  useColorScheme,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
   Appearance,
   Switch,
 } from "react-native";
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { createChatBot } from "../Api";
 import { InputField } from "../components/InputField";
 import { ChatHistory } from "../components/ChatHistory";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
 import { ChatHistoryProvider, useChatHistory } from "../hooks/useChatHistory";
-import { Bot } from "../Api";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../App";
+import { useTheme } from "../hooks/themeContext";
+import { navigation } from "@ex";
+import { useThemeHeader } from "../hooks/useThemeHeader";
 
-type ChatScreenRouteProp = RouteProp<RootStackParamList, "ChatScreen">
+type ChatScreenRouteProp = RouteProp<RootStackParamList, "ChatScreen">;
 
-type Props = { route: ChatScreenRouteProp}
+type Props = { route: ChatScreenRouteProp };
 
-export function ChatScreen({route} : Props) {
-	const { bot } = route.params
-	const { setBot } = useChatHistory();
-  const colorScheme = useColorScheme();
-  const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
-  const themeContainerStyle = colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
+export function ChatScreen({ route }: Props) {
+  const { bot } = route.params;
+  const { setBot } = useChatHistory();
+  const { palette, toggleTheme } = useTheme();
 
-	useEffect(() => {
-		setBot(bot);
-		console.log(bot.name)
-	}, []);
+  useThemeHeader();
+
+  useEffect(() => {
+    setBot(bot);
+  }, []);
+  const backgroundStyle = { backgroundColor: palette.background };
+  const textStyle = { color: palette.textOnSurface };
 
   return (
-
-    
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
-      style={[styles.container, themeContainerStyle]}>
+      style={[styles.container, backgroundStyle]}
+    >
       <SafeAreaView>
-        <ThemeProvider value={colorScheme=== 'dark' ? DarkTheme : DefaultTheme}>
-          <ScrollView style={[styles.scrollView, themeContainerStyle]}>
-            <ChatHistory />
-          </ScrollView>
-          <View style={[styles.container, themeContainerStyle]}>
-            <InputField />
-            <StatusBar style="auto" />
-          </View>
-        </ThemeProvider>
+        <ScrollView style={[styles.scrollView, backgroundStyle]}>
+          <ChatHistory />
+        </ScrollView>
+        <View style={[styles.container, backgroundStyle]}>
+          <InputField />
+          <StatusBar style="auto" />
+        </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
-
-	)
+  );
 }
 const styles = StyleSheet.create({
   container: {
@@ -65,18 +61,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: -1,
-  },
-    lightContainer: {
-    backgroundColor: '#fff',
-  },
-  darkContainer: {
-    backgroundColor: '#222',
-  },
-    lightThemeText: {
-    color: '#222',
-  },
-  darkThemeText: {
-    color: '#fff',
+    backgroundColor: "red",
   },
   keyboardAvoid: {
     flex: 1,
