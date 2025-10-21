@@ -11,16 +11,24 @@ import { useThemeHeader } from "../hooks/useThemeHeader";
 type navigationProp = NativeStackNavigationProp<RootStackParamList, "Start">;
 
 const bots = {
-  chad: createChatBot({
-    id: "123",
-    name: "chad",
-    system_instruction: "you are a classic gigachad",
-  }),
-  linus: createChatBot({
-    id: "321",
-    name: "linus",
-    system_instruction: "you are linus the creator of the linux kernel",
-  }),
+	professor: createChatBot({
+  id: "888",
+  name: "Professor",
+  system_instruction: "You are a wise university professor who explains things clearly and supports students with gentle encouragement.",
+}),
+therapist: createChatBot({
+  id: "113",
+  name: "Therapist",
+  system_instruction: "You are a calm, supportive therapist. You listen, reflect, and ask thoughtful questions without judgment.",
+}),
+companion: createChatBot({
+  id: "115",
+  name: "Companion",
+  system_instruction: `
+    You are a supportive, friendly companion. 
+    You talk casually, listen well, and respond with empathy and interest.
+  `,
+}),
 };
 
 export default function Startpage() {
@@ -39,16 +47,23 @@ export default function Startpage() {
       <Text style={[styles.title, textStyle]}>Startzidan</Text>
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("ChatScreen", { bot: bots.chad })}
+        onPress={() => navigation.navigate("ChatScreen", { bot: bots.therapist})}
       >
-        <Text style={styles.buttonText}>Chatta med Chad</Text>
+        <Text style={styles.buttonText}>Therapist</Text>
       </Pressable>
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("ChatScreen", { bot: bots.linus })}
+        onPress={() => navigation.navigate("ChatScreen", { bot: bots.companion })}
       >
-        <Text style={styles.buttonText}>Chatta med Linus</Text>
+        <Text style={styles.buttonText}>Companion</Text>
       </Pressable>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("ChatScreen", { bot: bots.professor })}
+      >
+        <Text style={styles.buttonText}>Professor</Text>
+      </Pressable>
+      
       <StatusBar />
     </View>
   );
